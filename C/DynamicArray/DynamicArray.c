@@ -1,11 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-
-typedef struct DArray{
-    int* arr;
-    size_t capacity;
-    size_t size;
-} DArray;
+#include "DynamicArray.h"
 
 DArray* initialize_array(){
     DArray* res = (DArray*)malloc(sizeof(DArray));

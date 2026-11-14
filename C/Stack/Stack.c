@@ -1,16 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-
-typedef struct Node{
-    int val;
-    struct Node* next;
-} Node;
-
-typedef struct Stack{
-    size_t size;
-    Node* head;
-    Node* tail;
-} Stack;
+#include "Stack.h"
 
 Stack* initialize_stack(){
     Stack* res = (Stack*)malloc(sizeof(Stack));

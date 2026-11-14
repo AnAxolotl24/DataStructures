@@ -1,5 +1,5 @@
-#ifndef DYNAMICARRAY_C
-#define DYNAMICARRAY_C
+#ifndef DYNAMICARRAY_H
+#define DYNAMICARRAY_H
 
 typedef struct DArray{
     int* arr;

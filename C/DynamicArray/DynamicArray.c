@@ -193,15 +193,32 @@ void print_arr(DArray* darr){
     printf("}\n");
 }
 
+int is_same(DArray* darr1, DArray* darr2){
+    if(darr1 == darr2){
+        return 1;
+    }
+    if(darr1->size != darr2->size){
+        return 0;
+    }
+    for(size_t i = 0; i < darr1->size; ++i){
+        if(darr1->arr[i] != darr2->arr[i]){
+            return 0;
+        }
+    }
+    return 1;
+}
+
 int main(void){
     DArray* test = initialize_array();
+    DArray* test2 = initialize_array();
     addlast_arr(test, 1);
     addlast_arr(test, 2);
     addlast_arr(test, 3);
-    addlast_arr(test, 4);
-    addlast_arr(test, 5);
-    insert_at(test, 2, 10);
-    print_arr(test);
+    addlast_arr(test2, 1);
+    addlast_arr(test2, 2);
+    addlast_arr(test2, 3);
+    printf("%d\n", is_same(test, test2));
     free_arr(test);
+    free_arr(test2);
     return 0;
 }

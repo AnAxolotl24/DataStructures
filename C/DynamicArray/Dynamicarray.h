@@ -28,5 +28,6 @@ void reserve(DArray* darr, size_t n);
 void shrink_to_fit_arr(DArray* darr);
 void free_arr(DArray* darr);
 void print_arr(DArray* darr);
+int is_similar(DArray* darr1, DArray* darr2);
 
 #endif

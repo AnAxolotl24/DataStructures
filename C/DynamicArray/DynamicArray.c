@@ -115,7 +115,7 @@ void insert_at(DArray* darr, size_t k, int val){
 
 void remove_at_arr(DArray* darr, size_t k){
     if(k > darr->size){
-        printf("Error : index k=%d is out of array\n", k);
+        printf("Error : index k=%lld is out of array\n", k);
         return;
     }
     for(size_t i = k; i < darr->size-1; ++i){

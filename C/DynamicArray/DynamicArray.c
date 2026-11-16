@@ -193,7 +193,7 @@ void print_arr(DArray* darr){
     printf("}\n");
 }
 
-int is_same(DArray* darr1, DArray* darr2){
+int is_similar(DArray* darr1, DArray* darr2){
     if(darr1 == darr2){
         return 1;
     }
@@ -207,7 +207,7 @@ int is_same(DArray* darr1, DArray* darr2){
     }
     return 1;
 }
-
+/*
 int main(void){
     DArray* test = initialize_array();
     DArray* test2 = initialize_array();
@@ -222,3 +222,4 @@ int main(void){
     free_arr(test2);
     return 0;
 }
+    */

@@ -2,6 +2,18 @@
 #include <assert.h>
 #include "DynamicArray.h"
 
+void test_reserve(){
+    DArray* test = initialize_array();
+    reserve(test, 3);
+    assert((test->capacity == 3) && (test->size == 0));
+
+    test->arr[0] = 0;
+    test->arr[1] = 1;
+    test->size = 2;
+    reserve(test, 10);
+    assert((test->capacity == 10) && (test->size == 2) && (test->arr[0] == 0) && (test->arr[1] == 1));
+}
+
 void test_addlast(){
     DArray* test = initialize_array();
     DArray* res = initialize_array();
@@ -28,6 +40,7 @@ void test_addlast(){
     addlast_arr(test, 15);
     assert(is_similar(test, res));
 }
+
 
 int main(void){
     test_addlast();

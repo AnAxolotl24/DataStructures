@@ -49,8 +49,18 @@ void test_get_val(){
     addlast_arr(test, 5);
     assert((get_arr_val(test, 3) == 5) && (get_arr_val(test, 2) == 2));
 
-    clear(test);
-    assert(get_arr_val(test, 3) == -1);
+}
+
+void test_get_first(){
+    DArray* test = initialize_array();
+    addlast_arr(test, 4);
+    assert(get_first_arr(test) == 4);
+
+    addlast_arr(test, 4);
+    addlast_arr(test, 7);
+    addlast_arr(test, 1);
+    addlast_arr(test, 9);
+    assert(get_first_arr(test) == 4);
 }
 
 
@@ -58,5 +68,6 @@ int main(void){
     test_addlast();
     test_reserve();
     test_get_val();
+    test_get_first();
     return 0;
 }

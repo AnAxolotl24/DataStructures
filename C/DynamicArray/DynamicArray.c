@@ -35,7 +35,7 @@ void resize_array(DArray* darr){
 
 int get_arr_val(DArray* darr, size_t k){
     if(k >= darr->size){
-        printf("Error : index is outside of array\n");
+        printf("Error : index out of range\n");
         return -1;
     }
     return darr->arr[k];
@@ -76,7 +76,7 @@ void pop_back_arr(DArray* darr){
 
 void set_at(DArray* darr, size_t k, int val){
     if(k > darr->size){
-        printf("Error : index is outside of array\n");
+        printf("Error : index is out of range\n");
     }else if(k == darr->size){
         addlast_arr(darr, val);
     }else{

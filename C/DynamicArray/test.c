@@ -41,8 +41,22 @@ void test_addlast(){
     assert(is_similar(test, res));
 }
 
+void test_get_val(){
+    DArray* test = initialize_array();
+    addlast_arr(test, 4);
+    addlast_arr(test, 8);
+    addlast_arr(test, 2);
+    addlast_arr(test, 5);
+    assert((get_arr_val(test, 3) == 5) && (get_arr_val(test, 2) == 2));
+
+    clear(test);
+    assert(get_arr_val(test, 3) == -1);
+}
+
 
 int main(void){
     test_addlast();
+    test_reserve();
+    test_get_val();
     return 0;
 }

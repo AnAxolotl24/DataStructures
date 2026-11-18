@@ -70,16 +70,22 @@ void stack_print(Stack* stk){
     printf("%d}\n", curr->val);
 }
 
-
-int main(void){
-    Stack* test = initialize_stack();
-    stack_push(test, 1);
-    stack_push(test, 2);
-    stack_push(test, 3);
-    stack_push(test, 4);
-    stack_push(test, 5);
-    stack_pop(test);
-    printf("%d\n", stack_size(test));
-    stack_print(test);
-    return 0;
+int is_same_stack(Stack* stk1, Stack* stk2){
+    if(stk1 == stk2){
+        return 1;
+    }
+    if(stk1->size != stk2->size){
+        return 0;
+    }
+    Node* curr1 = stk1->head;
+    Node* curr2 = stk2->head;
+    while(curr1 != NULL || curr2 != NULL){
+        if(curr1->val != curr2->val){
+            return 0;
+        }
+        curr1 = curr1->next;
+        curr2 = curr2->next;
+    }
+    return 1;
 }
+

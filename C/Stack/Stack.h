@@ -20,5 +20,6 @@ void stack_push(Stack* stk, int value);
 void stack_pop(Stack* stk);
 int stack_is_empty(Stack* stk);
 void stack_print(Stack* stk);
+int is_same_stack(Stack* stk1, Stack* stk2);
 
 #endif

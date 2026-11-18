@@ -28,7 +28,7 @@ size_t stack_size(Stack* stk){
 }
 
 int stack_head(Stack* stk){
-    if(stk->size > 0){
+    if(stk->size == 0){
         printf("Error : Stack is empty\n");
     }
     return stk->head->val;

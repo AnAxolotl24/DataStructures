@@ -74,7 +74,7 @@ void pop_back_arr(DArray* darr){
     }
 }
 
-void set_at(DArray* darr, size_t k, int val){
+void set_at_arr(DArray* darr, size_t k, int val){
     if(k > darr->size){
         printf("Error : index is out of range\n");
     }else if(k == darr->size){
@@ -84,7 +84,7 @@ void set_at(DArray* darr, size_t k, int val){
     }
 }
 
-int get_at(DArray* darr, size_t k){
+int get_at_arr(DArray* darr, size_t k){
     if(k >= darr->size){
         printf("Error : index out of range\n");
         return -1;
@@ -92,7 +92,7 @@ int get_at(DArray* darr, size_t k){
     return darr->arr[k];
 }
 
-void insert_at(DArray* darr, size_t k, int val){
+void insert_at_arr(DArray* darr, size_t k, int val){
     if(k > darr->size){
         printf("Error : index out of range");
         return;
@@ -107,8 +107,8 @@ void insert_at(DArray* darr, size_t k, int val){
     int tmp2 = 0;
     darr->size++;
     for(size_t i = k; i < darr->size; ++i){
-        tmp2 = get_at(darr, i);
-        set_at(darr, i, tmp);
+        tmp2 = get_at_arr(darr, i);
+        set_at_arr(darr, i, tmp);
         tmp = tmp2;
     }
 }
@@ -162,6 +162,11 @@ void reserve(DArray* darr, size_t n){
 }
 
 void shrink_to_fit_arr(DArray* darr){
+    if(darr->size == 0){
+        free(darr->arr);
+        darr->arr = NULL;
+        darr->capacity = 0;
+    }
     int* tmp = (int*)malloc(sizeof(int) * darr->size);
     if(tmp == NULL){
         printf("Error : memory allocation of new array failed, operation aborted\n");
@@ -207,19 +212,3 @@ int is_similar(DArray* darr1, DArray* darr2){
     }
     return 1;
 }
-/*
-int main(void){
-    DArray* test = initialize_array();
-    DArray* test2 = initialize_array();
-    addlast_arr(test, 1);
-    addlast_arr(test, 2);
-    addlast_arr(test, 3);
-    addlast_arr(test2, 1);
-    addlast_arr(test2, 2);
-    addlast_arr(test2, 3);
-    printf("%d\n", is_same(test, test2));
-    free_arr(test);
-    free_arr(test2);
-    return 0;
-}
-    */

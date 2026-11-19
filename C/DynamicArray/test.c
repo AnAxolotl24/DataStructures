@@ -273,6 +273,6 @@ int main(void){
     test_is_empty();
     test_get_data();
     test_shrink_to_fit();
-    printf("All tests passed\n");
+    printf("All dynamic array tests passed\n");
     return 0;
 }

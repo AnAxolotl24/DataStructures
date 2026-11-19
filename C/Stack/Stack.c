@@ -10,7 +10,7 @@ Stack* initialize_stack(){
     return res;
 }
 
-void stack_empty(Stack* stk){
+void empty_stack(Stack* stk){
     Node* curr = stk->head;
     Node* prec = NULL;
     while(curr != NULL){
@@ -29,7 +29,7 @@ size_t stack_size(Stack* stk){
 
 int stack_head(Stack* stk){
     if(stk->size == 0){
-        printf("Error : Stack is empty\n");
+        fprintf(stderr, "Error : Stack is empty\n");
     }
     return stk->head->val;
 }
@@ -44,7 +44,7 @@ void stack_push(Stack* stk, int value){
 
 void stack_pop(Stack* stk){
     if(stk->size == 0){
-        printf("Error : Cannot pop, stack is empty\n");
+        fprintf(stderr, "Error : Cannot pop, stack is empty\n");
     }
     Node* tmp = stk->head;
     stk->head = tmp->next;
@@ -89,3 +89,7 @@ int is_same_stack(Stack* stk1, Stack* stk2){
     return 1;
 }
 
+void free_stack(Stack* stk){
+    empty_stack(stk);
+    free(stk);
+}

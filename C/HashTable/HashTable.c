@@ -1,25 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct{
-    int* arr;
+typedef struct Entry{
+    int value;
+    char* key;
+    struct Entry* next;
+} Entry;
+
+typedef struct HashTable{
+    Entry** arr;
     size_t length;
 } HashTable;
 
 HashTable* initialize_hashtable(size_t len){
-    HashTable* res = (HashTable*)malloc(sizeof(HashTable));
+    HashTable* res = (HashTable*)malloc(sizeof(*res));
     if(res == NULL){
         fprintf(stderr, "Memory allocation for hash table failed\n");
         exit(EXIT_FAILURE);
     }
-    res->arr = (int*)malloc(sizeof(int) * len);
+    res->arr = (Entry**)malloc(sizeof(*res->arr) * len);
     if(res->arr == NULL){
         fprintf(stderr, "Memory allocation for array failed\n");
         exit(EXIT_FAILURE);
     }
     for(size_t i = 0; i < len; ++i){
-        res->arr[i] = -1;
+        res->arr[i] = NULL;
     }
+    res->length = len;
     return res;
 }
 
@@ -41,16 +48,120 @@ size_t hash_division(char* key, size_t len){
     size_t i = 0;
     while(key[i] != '\0'){
         key_value += key[i] * pow_rec(128, i);
+        ++i;
     }
-    return key_value % len;
+    return (key_value % len);
 }
 
-void hashtable_insert(HashTable* hash,char* key, int value){
-    hash->arr[hash_division(key, hash->length)] = value;
+char* duplicate_key(char* key){
+    size_t len = 0;
+    size_t i = 0;
+    while(key[i] != '\0'){
+        ++len;
+        ++i;
+    }
+    i = 0;
+    char* duped_key = (char*)malloc(sizeof(*duped_key) * (len+1));
+    if(duped_key == NULL){
+        fprintf(stderr, "Failed to initialize key in memory\n");
+        exit(EXIT_FAILURE);
+    }
+    for(i = 0; i < len + 1; ++i){
+        duped_key[i] = key[i];
+    }
+    return duped_key;
 }
+
+int is_same_string(char* str1, char* str2){
+    size_t i = 0;
+    while(str1[i] != '\0' && str2[i] != '\0'){
+        if(str1[i] != str2[i]){
+            return 0;
+        }
+        ++i;
+    }
+    return (str1[i] == str2[i]);
+}
+
+void hashtable_insert(HashTable* hash, char* key, int value){
+    size_t index = hash_division(key, hash->length);
+    if(hash->arr[index] == NULL){
+        Entry* res = (Entry*)malloc(sizeof(*res));
+        if(res == NULL){
+            fprintf(stderr, "Failed to initialize Entry in memory\n");
+            exit(EXIT_FAILURE);
+        }
+        res->value = value;
+        res->key = duplicate_key(key);
+        res->next = NULL;
+        hash->arr[index] = res;
+    }else{
+        Entry* curr = hash->arr[index];
+        while(curr->next != NULL){
+            if(is_same_string(curr->key, key)){
+                curr->value = value;
+                return;
+            }
+            curr = curr->next;
+        }
+        Entry* res = (Entry*)malloc(sizeof(*res));
+        if(res == NULL){
+            fprintf(stderr, "Failed to initialize Entry in memory\n");
+            exit(EXIT_FAILURE);
+        }
+        res->value = value;
+        res->key = duplicate_key(key);
+        res->next = NULL;
+        curr->next = res;
+    }
+}
+
+int hashtable_get(HashTable* hash, char* key){
+    size_t index = hash_division(key, hash->length);
+    Entry* curr = hash->arr[index];
+    while(curr != NULL){
+        if(is_same_string(curr->key, key)){
+            return curr->value;
+        }
+        curr = curr->next;
+    }
+    printf("Error : key has no initialized value\n");
+    exit(EXIT_FAILURE);
+}
+
+void free_entry(Entry* first){
+    Entry* curr = first;
+    Entry* prev = NULL;
+    while(curr != NULL){
+        prev = curr;
+        curr = curr->next;
+        free(prev);
+    }
+}
+
+void hashtable_free(HashTable* hash){
+    for(size_t i = 0; i < hash->length; ++i){
+        free_entry(hash->arr[i]);
+    }
+    free(hash->arr);
+    free(hash);
+}
+
+
 
 
 int main(void){
-    printf("Hello world!\n");
+    HashTable* htbl = initialize_hashtable(307);
+    hashtable_insert(htbl, "insert", 2);
+    hashtable_insert(htbl, "get", 5);
+    hashtable_insert(htbl, "delete", 125);
+    hashtable_insert(htbl, "star", 21);
+    hashtable_insert(htbl, "moon", 12);
+    printf("%d\n",hashtable_get(htbl, "insert"));
+    printf("%d\n",hashtable_get(htbl, "get"));
+    printf("%d\n",hashtable_get(htbl, "delete"));
+    printf("%d\n",hashtable_get(htbl, "star"));
+    printf("%d\n",hashtable_get(htbl, "moon"));
+    hashtable_free(htbl);
     return 0;
 }

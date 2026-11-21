@@ -97,12 +97,16 @@ void hashtable_insert(HashTable* hash, char* key, int value){
         hash->arr[index] = res;
     }else{
         Entry* curr = hash->arr[index];
-        while(curr->next != NULL){
+        if(is_same_string(curr->key, key)){
+                curr->value = value;
+                return;
+            }
+        while(curr->next != NULL || is_same_string(curr->key, key)){
+            curr = curr->next;
             if(is_same_string(curr->key, key)){
                 curr->value = value;
                 return;
             }
-            curr = curr->next;
         }
         Entry* res = (Entry*)malloc(sizeof(*res));
         if(res == NULL){
@@ -127,6 +131,31 @@ int hashtable_get(HashTable* hash, char* key){
     }
     printf("Error : key has no initialized value\n");
     exit(EXIT_FAILURE);
+}
+
+void display_string(char* str){
+    size_t i = 0;
+    while(str[i] != '\0'){
+        printf("%c", str[i]);
+        ++i;
+    }
+}
+
+void display_linked_list(Entry* first){
+    Entry* curr = first;
+    while(curr != NULL){
+        display_string(curr->key);
+        printf(" : %d; ",curr->value);
+        curr = curr->next;
+    }
+}
+
+void hashtable_display(HashTable* hash){
+    printf("{");
+    for(size_t i = 0; i < hash->length; ++i){
+        display_linked_list(hash->arr[i]);
+    }
+    printf("}\n");
 }
 
 void free_entry(Entry* first){
@@ -157,11 +186,8 @@ int main(void){
     hashtable_insert(htbl, "delete", 125);
     hashtable_insert(htbl, "star", 21);
     hashtable_insert(htbl, "moon", 12);
-    printf("%d\n",hashtable_get(htbl, "insert"));
-    printf("%d\n",hashtable_get(htbl, "get"));
-    printf("%d\n",hashtable_get(htbl, "delete"));
-    printf("%d\n",hashtable_get(htbl, "star"));
-    printf("%d\n",hashtable_get(htbl, "moon"));
+    hashtable_insert(htbl, "moon", 65);
+    hashtable_display(htbl);
     hashtable_free(htbl);
     return 0;
 }

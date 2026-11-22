@@ -178,18 +178,83 @@ void hashtable_free(HashTable* hash){
     free(hash);
 }
 
+int hashtable_is_empty(HashTable* hash){
+    for(size_t i = 0; i < hash->length; ++i){
+        if(hash->arr[i] != NULL){
+            return 1;
+        }
+    }
+    return 0;
+}
 
+int hashtable_get_size(HashTable* hash){
+    return hash->length;
+}
 
+int hashtable_contains(HashTable* hash, char* key){
+    Entry* curr = hash->arr[hash_division(key, hash->length)];
+    while(curr != NULL){
+        if(is_same_string(curr->key, key)){
+            return 1;
+        }
+        curr = curr->next;
+    }
+    return 0;
+}
+
+void hashtable_remove(HashTable* hash, char* key){
+    size_t index = hash_division(key, hash->length);
+    Entry* curr = hash->arr[index];
+    Entry* prev = NULL;
+    while(curr != NULL){
+        if(is_same_string(curr->key, key)){
+            if(prev == NULL){
+                hash->arr[index] = NULL;
+            }else{
+                prev->next = curr->next;
+            }
+            free(curr);
+            return;
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+}
+
+void count_linked_list_length(Entry* head, size_t* acc){
+    Entry* curr = head;
+    while(curr != NULL){
+        ++(*acc);
+        curr = curr->next;
+    }
+}
+
+float hashtable_get_load_factor(HashTable* hash){
+    size_t total = hash->length;
+    size_t n_elem = 0;
+    for(size_t i = 0; i < hash->length; ++i){
+        count_linked_list_length(hash->arr[i], &n_elem);
+    }
+    return (float)n_elem/total;
+}
 
 int main(void){
-    HashTable* htbl = initialize_hashtable(307);
+    HashTable* htbl = initialize_hashtable(103);
     hashtable_insert(htbl, "insert", 2);
     hashtable_insert(htbl, "get", 5);
     hashtable_insert(htbl, "delete", 125);
     hashtable_insert(htbl, "star", 21);
     hashtable_insert(htbl, "moon", 12);
-    hashtable_insert(htbl, "moon", 65);
+    hashtable_insert(htbl, "full", 65);
+    hashtable_insert(htbl, "reindeer", 63);
+    hashtable_insert(htbl, "sleep", 93);
+    hashtable_insert(htbl, "bed", 62);
+    hashtable_insert(htbl, "sit", 49);
+    hashtable_insert(htbl, "Char", 14);
+    hashtable_insert(htbl, "Table", 42);
+    hashtable_insert(htbl, "Sun", 36);
     hashtable_display(htbl);
+    printf("Remplissage : %.5f\n", hashtable_get_load_factor(htbl));
     hashtable_free(htbl);
     return 0;
 }

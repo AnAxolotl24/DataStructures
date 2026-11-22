@@ -144,8 +144,10 @@ void display_string(char* str){
 void display_linked_list(Entry* first){
     Entry* curr = first;
     while(curr != NULL){
+        printf("(");
         display_string(curr->key);
-        printf(" : %d; ",curr->value);
+        printf(" : %d",curr->value);
+        printf("); ");
         curr = curr->next;
     }
 }

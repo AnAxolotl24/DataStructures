@@ -1,6 +1,5 @@
 main.c
-main.exe
-test.exe
+*.exe
 main.cpp
 compilation.txt
 PlaygroundWorkspace.code-workspace

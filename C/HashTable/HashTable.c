@@ -53,6 +53,38 @@ size_t hash_division(char* key, size_t len){
     return (key_value % len);
 }
 
+int power_of_2_of_uint(size_t x){
+    unsigned int acc = 0;
+    while(x != 0){
+        x = x >> 1;
+        ++acc;
+    }
+    return (acc - 1);
+}
+
+size_t hash_multiplication(char* key, size_t len){
+    const size_t s = 2654435769; //s such that s/2^32 = A is close to golden ratio
+    size_t key_value = 0;
+    size_t i = 0;
+    int p = power_of_2_of_uint(len);
+    if(p == -1){
+        fprintf(stderr, "Error, Hashtable size is 0\n");
+        exit(EXIT_FAILURE);
+    }
+    while(key[i] != '\0'){
+        key_value += key[i] * pow_rec(64, i);
+        ++i;
+    }
+    key_value *= s;
+    key_value &= 0xFFFFFFFFULL;
+    for(int j = 0; j < (32 - p); ++j){
+        key_value = key_value >> 1;
+    }
+    return key_value;
+
+
+}
+
 char* duplicate_key(char* key){
     size_t len = 0;
     size_t i = 0;

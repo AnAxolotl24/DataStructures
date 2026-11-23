@@ -1,5 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "Stack.h"
 
 Stack* initialize_stack(){

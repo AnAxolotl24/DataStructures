@@ -1,6 +1,9 @@
 #ifndef DYNAMICARRAY_H
 #define DYNAMICARRAY_H
 
+#include <stdlib.h>
+#include <stdio.h>
+
 typedef struct DArray{
     int* arr;
     size_t capacity;

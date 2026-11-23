@@ -1,16 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct Entry{
-    int value;
-    char* key;
-    struct Entry* next;
-} Entry;
-
-typedef struct HashTable{
-    Entry** arr;
-    size_t length;
-} HashTable;
+#include "HashTable.h"
 
 HashTable* initialize_hashtable(size_t len){
     HashTable* res = (HashTable*)malloc(sizeof(*res));
@@ -134,11 +122,11 @@ void hashtable_insert(HashTable* hash, char* key, int value){
                 return;
             }
         while(curr->next != NULL || is_same_string(curr->key, key)){
-            curr = curr->next;
             if(is_same_string(curr->key, key)){
                 curr->value = value;
                 return;
             }
+            curr = curr->next;
         }
         Entry* res = (Entry*)malloc(sizeof(*res));
         if(res == NULL){
@@ -198,6 +186,7 @@ void free_entry(Entry* first){
     while(curr != NULL){
         prev = curr;
         curr = curr->next;
+        free(prev->key);
         free(prev);
     }
 }

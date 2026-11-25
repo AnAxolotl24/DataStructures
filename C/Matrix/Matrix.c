@@ -1,11 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-
-typedef struct Matrix{
-    int* matrix;
-    size_t row;
-    size_t column;
-} Matrix;
+#include "Matrix.h"
 
 Matrix* matrix_initialization(size_t row, size_t column){
     Matrix* res = (Matrix*)malloc(sizeof(*res));

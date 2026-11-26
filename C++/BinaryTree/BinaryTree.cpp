@@ -293,7 +293,7 @@ class BinaryTree{
             }
             return -1;
         }
-    };
+};
 
 
 

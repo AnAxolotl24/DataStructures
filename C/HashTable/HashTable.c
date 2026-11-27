@@ -56,7 +56,7 @@ size_t hash_multiplication(char* key, size_t len){
     size_t i = 0;
     int p = power_of_2_of_uint(len);
     if(p == -1){
-        fprintf(stderr, "Error, Hashtable size is 0\n");
+        fprintf(stderr, "Error, cannot use hash multiplication, Hashtable size is 0\n");
         exit(EXIT_FAILURE);
     }
     while(key[i] != '\0'){

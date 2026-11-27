@@ -56,7 +56,7 @@ size_t hash_multiplication(char* key, size_t len){
     size_t i = 0;
     int p = power_of_2_of_uint(len);
     if(p == -1){
-        fprintf(stderr, "Error, cannot use hash multiplication, Hashtable size is 0\n");
+        fprintf(stderr, "Error, cannot do hash multiplication, Hashtable size is 0\n");
         exit(EXIT_FAILURE);
     }
     while(key[i] != '\0'){
@@ -83,7 +83,7 @@ char* duplicate_key(char* key){
     i = 0;
     char* duped_key = (char*)malloc(sizeof(*duped_key) * (len+1));
     if(duped_key == NULL){
-        fprintf(stderr, "Failed to initialize key in memory\n");
+        fprintf(stderr, "Error : cannot duplicate key, failed to initialize key in memory\n");
         exit(EXIT_FAILURE);
     }
     for(i = 0; i < len + 1; ++i){
@@ -108,7 +108,7 @@ void hashtable_insert(HashTable* hash, char* key, int value){
     if(hash->arr[index] == NULL){
         Entry* res = (Entry*)malloc(sizeof(*res));
         if(res == NULL){
-            fprintf(stderr, "Failed to initialize Entry in memory\n");
+            fprintf(stderr, "Error : cannot insert in hashtable, failed to initialize Entry in memory\n");
             exit(EXIT_FAILURE);
         }
         res->value = value;
